@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.jmeterdemo.dao.UserDao">
+
+    <insert id="insertOne" parameterType="User">
+        insert into user(id, name, age, gender, address, phone,
+            birthday, create_time, modify_time)
+        values(#{id},#{name},#{age},#{gender},#{address},#{phone},
+            #{birthday},#{createTime},#{modifyTime})
+    </insert>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        insert into user(id, name, age, gender, address, phone,
+            birthday, create_time, modify_time)
+        values
+        <foreach collection="users" item="item" index="index" separator=",">
+            (#{item.id},#{item.name},#{item.age},#{item.gender},#{item.address},#{item.phone},
+            #{item.birthday},#{item.createTime},#{item.modifyTime})
+        </foreach>
+    </insert>
+
+    <select id="selectOne" resultType="User">
+        select id, name, age, gender, address, phone,
+            birthday, create_time as createTime, modify_time as modifyTime
+        from user
+        where id=#{id}
+    </select>
+
+    <select id="selectList" resultType="User">
+        select id, name, age, gender, address, phone,
+            birthday, create_time as createTime, modify_time as modifyTime
+        from user
+        <where>
+            <if test="id!=null and id!=''">
+                id=#{id},
+            </if>
+            <if test="age!=null and age!=''">
+                and age=#{age}
+            </if>
+            <if test="name!=null and name!=''">
+                and name=#{name}
+            </if>
+        </where>
+    </select>
+
+</mapper>
