@@ -34,6 +34,16 @@ public class UserController {
     @ResponseBody
     public String listUser(@RequestBody Map<String,Object> param) {
         Map<String,Object> map = new HashMap<>();
+        int page = 1;
+        int size = 10;
+        if(param.get("page")!=null) {
+            page = (int)param.get("page");
+        }
+        if(param.get("size")!=null) {
+            size = (int) param.get("size");
+        }
+        map.put("page",(page-1)*size);
+        map.put("size",size);
         if(param.get("id")!=null) {
             map.put("id", param.get("id"));
         }
