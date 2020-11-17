@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 @Mapper
-@Repository
 public interface UserDao {
 
     int insertOne(User user);
